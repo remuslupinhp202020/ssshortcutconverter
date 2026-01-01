@@ -1,78 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shortcut Master</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <div class="container">
-        <header>
-            <h1>Shortcut Master</h1>
-            <p class="subtitle">The ultimate Excel &harr; Google Sheets Reference</p>
-        </header>
-
-        <!-- Controls -->
-        <div class="controls-wrapper">
-            <div class="toggle-pill">
-                <span class="label">Win</span>
-                <label class="switch">
-                    <input type="checkbox" id="osToggle">
-                    <span class="slider round"></span>
-                </label>
-                <span class="label">Mac</span>
-            </div>
-
-            <div class="toggle-pill">
-                <span class="label">Excel</span>
-                <label class="switch direction-switch">
-                    <input type="checkbox" id="dirToggle">
-                    <span class="slider round"></span>
-                </label>
-                <span class="label">Sheets</span>
-            </div>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search 'Pivot', 'Macro', or 'Ctrl+C'...">
-        </div>
-
-        <!-- NEW: Legend / Tips Section -->
-        <div class="legend-box">
-            <div class="legend-item">
-                <div class="legend-header">
-                    <span class="type-tag tag-hold">Hold</span> 
-                    <span class="legend-key">Ctrl + P</span>
+<!-- NEW LEGEND SECTION -->
+        <div class="tips-card">
+            <!-- Left Side: Hold -->
+            <div class="tip-column">
+                <div class="tip-header">
+                    <span class="type-tag tag-hold">HOLD</span>
+                    <span class="tip-example">Ctrl + P</span>
                 </div>
-                <p>Where keys must be pressed together. <br><em>(e.g. Press Ctrl and P at the same time)</em></p>
+                <p class="tip-text">
+                    <strong>Simultaneous Action:</strong> When keys are linked by a plus sign, hold them all down at the same time.
+                </p>
             </div>
-            
-            <div class="legend-divider"></div>
 
-            <div class="legend-item">
-                <div class="legend-header">
-                    <span class="type-tag tag-seq">Sequential</span> 
-                    <span class="legend-key">Alt + H , A C</span>
+            <div class="tip-divider"></div>
+
+            <!-- Right Side: Sequential -->
+            <div class="tip-column">
+                <div class="tip-header">
+                    <span class="type-tag tag-seq">SEQUENTIAL</span>
+                    <span class="tip-example">Alt, H, A, C</span>
                 </div>
-                <p>Where keys must be pressed one after another. <br><em>(e.g. Press Alt+H together, release, then press A, then C)</em></p>
+                <p class="tip-text">
+                    <strong>Chain Command:</strong> When keys are separated by commas, press and release them strictly one after another.
+                </p>
             </div>
         </div>
-        
-        <!-- Mode Indicator -->
-        <div id="instruction-text" class="helper-text">Mode: Windows | Excel &rarr; Sheets</div>
-
-        <!-- Smart Alert -->
-        <div id="differencesContainer" class="smart-alert" style="display: none;"></div>
-
-        <!-- Results -->
-        <div id="loading" class="loading">Connecting to database...</div>
-        <div id="resultsContainer" class="results-list"></div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
