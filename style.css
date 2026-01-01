@@ -1,65 +1,144 @@
-/* --- TIPS / LEGEND CARD STYLING --- */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --primary: #2563eb;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --border-radius: 12px;
+    
+    /* Brand Colors */
+    --excel: #107c41;
+    --sheets: #0f9d58;
+    --win-blue: #0078d7; 
+    --mac-dark: #111827;
+}
 
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+header { text-align: center; margin-bottom: 25px; }
+h1 { margin: 0; font-weight: 800; letter-spacing: -0.5px; font-size: 1.8rem; }
+.subtitle { color: var(--text-light); margin-top: 5px; font-size: 0.95rem; }
+
+/* --- CONTROLS --- */
+.controls-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Wraps on very small screens */
+}
+
+.toggle-pill {
+    background: #e5e7eb;
+    padding: 6px 16px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Switch Styles */
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; transition: .4s; border-radius: 34px; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+
+/* OS Toggle Colors */
+#osToggle:not(:checked) + .slider { background-color: var(--win-blue); }
+#osToggle:checked + .slider { background-color: var(--mac-dark); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* Direction Toggle Colors */
+.direction-switch input:not(:checked) + .slider { background-color: var(--excel); }
+.direction-switch input:checked + .slider { background-color: var(--sheets); }
+
+/* --- SEARCH --- */
+.search-box { margin-bottom: 0; }
+.search-box input {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border: 2px solid #e5e7eb;
+    border-radius: var(--border-radius);
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+}
+.search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+/* --- TIPS / LEGEND CARD --- */
 .tips-card {
     background-color: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 20px;
-    margin: 25px 0 30px 0; /* Top and Bottom spacing */
+    margin: 20px 0; /* Vertical spacing */
     display: flex;
-    gap: 30px;
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* distinct shadow */
+    gap: 20px;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     align-items: flex-start;
 }
 
-.tip-column {
-    flex: 1;
-}
-
-.tip-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-}
-
+.tip-column { flex: 1; }
+.tip-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
 .tip-example {
-    font-family: monospace;
-    font-weight: 700;
-    color: #374151;
-    background: #f3f4f6;
-    padding: 3px 8px;
-    border-radius: 4px;
-    border: 1px solid #e5e7eb;
-    font-size: 0.9rem;
+    font-family: monospace; font-weight: 700; color: #374151;
+    background: #f3f4f6; padding: 3px 8px; border-radius: 4px;
+    border: 1px solid #e5e7eb; font-size: 0.85rem;
 }
+.tip-text { margin: 0; font-size: 0.9rem; line-height: 1.5; color: #4b5563; }
+.tip-text strong { color: #111827; font-weight: 600; }
+.tip-divider { width: 1px; background-color: #e5e7eb; align-self: stretch; }
 
-.tip-text {
-    margin: 0;
-    font-size: 0.9rem;
+/* --- SMART ALERT --- */
+.smart-alert {
+    background: #eff6ff;
+    border-left: 4px solid var(--primary);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: #1e3a8a;
     line-height: 1.5;
-    color: #4b5563;
 }
 
-.tip-text strong {
-    color: #111827;
-    font-weight: 600;
+.helper-text { text-align: center; font-size: 0.85rem; color: var(--text-light); margin-bottom: 20px; }
+
+/* --- RESULTS --- */
+.results-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 40px;}
+
+.shortcut-card {
+    background: var(--card-bg);
+    padding: 18px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #f3f4f6;
+    gap: 15px;
 }
 
-.tip-divider {
-    width: 1px;
-    align-self: stretch; /* Height matches the card */
-    background-color: #e5e7eb;
-}
+.card-content { flex: 1; overflow: hidden; } /* Prevents overflow */
+.desc { font-weight: 600; font-size: 1.05rem; margin-bottom: 8px; color: var(--text-dark); }
 
-/* Mobile Layout: Stack them vertically */
-@media (max-width: 600px) {
-    .tips-card {
-        flex-direction: column;
-        gap: 20px;
-    }
-    .tip-divider {
-        width: 100%;
-        height: 1px;
-    }
-}
+.keys-row { display: flex; align-items: center; gap
