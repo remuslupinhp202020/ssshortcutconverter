@@ -1,5 +1,5 @@
-// PASTE YOUR GOOGLE SCRIPT URL HERE
-const API_URL = "https://script.google.com/macros/s/AKfycbyCVYvwe5Zz2aSIWZt-zaAu75_1RYHa-5Abb3HB02x0nj_jY3fnK10RfIJsaAdabzau5Q/exec"; 
+// REPLACE WITH YOUR GOOGLE APPS SCRIPT URL
+const API_URL = "https://script.google.com/macros/s/AKfycbwEjkaQQRSTdhncI9Ix43bTKdN0K3NlTemD3S3B9FtqOLtjQfNueuO3Zl-nd-la8oVJoQ/exec"; 
 
 let appData = { shortcuts: [], differences: [] };
 let state = { isMac: false, isExcelSource: true };
@@ -32,6 +32,7 @@ async function fetchData() {
         const res = await fetch(API_URL);
         const json = await res.json();
         
+        // Normalize keys (handle excel_Win vs excel_win)
         appData.shortcuts = cleanDataKeys(json.shortcuts);
         appData.differences = cleanDataKeys(json.differences);
         
@@ -39,7 +40,7 @@ async function fetchData() {
         render(appData.shortcuts); 
     } catch (err) {
         console.error(err);
-        els.loading.textContent = "Error loading database.";
+        els.loading.textContent = "Error loading database. Check console.";
     }
 }
 
@@ -78,7 +79,7 @@ function updateInstruction() {
     els.instruction.innerHTML = `Mode: <strong>${os}</strong> | ${flow}`;
 }
 
-// Logic
+// Logic: Search Shortcuts
 function filterShortcuts(query) {
     const q = query.toLowerCase();
     const filtered = appData.shortcuts.filter(item => 
@@ -87,6 +88,7 @@ function filterShortcuts(query) {
     render(filtered);
 }
 
+// Logic: Render Results
 function render(data) {
     els.results.innerHTML = '';
     
@@ -103,7 +105,7 @@ function render(data) {
         const sVal = item[sourceCol] || "N/A";
         const tVal = item[targetCol] || "N/A";
 
-        // Determine Tag Color
+        // Tag Logic
         const typeStr = (item.type || "").toLowerCase();
         let typeClass = "type-tag";
         if (typeStr.includes("hold")) typeClass += " tag-hold";
@@ -126,6 +128,7 @@ function render(data) {
     });
 }
 
+// Logic: Show Multiple Differences
 function showDifferences(query) {
     if (!query) {
         els.diffBox.style.display = 'none';
@@ -133,7 +136,7 @@ function showDifferences(query) {
     }
     const q = query.toLowerCase();
     
-    // CHANGE 1: Use .filter() to get ALL matches, not just the first one
+    // FIND ALL MATCHES
     const matches = appData.differences.filter(d => 
         (d.keywords && d.keywords.toLowerCase().includes(q)) || 
         (d.title && d.title.toLowerCase().includes(q))
@@ -141,9 +144,7 @@ function showDifferences(query) {
 
     if (matches.length > 0) {
         els.diffBox.style.display = 'block';
-        
-        // CHANGE 2: Map through all matches and join them
-        // We add a 'margin-bottom' to separate multiple tips
+        // Map matches to HTML and join them
         els.diffBox.innerHTML = matches.map(match => `
             <div style="margin-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 12px;">
                 <strong>💡 ${match.title}</strong> 
@@ -151,11 +152,12 @@ function showDifferences(query) {
             </div>
         `).join('');
         
-        // Remove the border from the very last item to look clean
-        els.diffBox.lastElementChild.style.borderBottom = 'none';
-        els.diffBox.lastElementChild.style.marginBottom = '0';
-        els.diffBox.lastElementChild.style.paddingBottom = '0';
-
+        // Clean up last item style
+        if(els.diffBox.lastElementChild) {
+            els.diffBox.lastElementChild.style.borderBottom = 'none';
+            els.diffBox.lastElementChild.style.marginBottom = '0';
+            els.diffBox.lastElementChild.style.paddingBottom = '0';
+        }
     } else {
         els.diffBox.style.display = 'none';
     }
