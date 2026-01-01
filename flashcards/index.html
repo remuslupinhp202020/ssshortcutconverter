@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Trainer</title>
+    <link rel="stylesheet" href="../style.css"> <!-- Inherit main fonts -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="trainer-container">
+        
+        <!-- Header -->
+        <div class="trainer-header">
+            <div class="streak-box">🔥 Streak: <span id="streak">0</span></div>
+            <div class="settings">
+                <label class="switch-sm">
+                    <input type="checkbox" id="osToggle">
+                    <span class="slider-sm round"></span>
+                </label>
+                <span id="os-label">Windows</span>
+            </div>
+        </div>
+
+        <!-- The Flashcard -->
+        <div class="card-area">
+            <div id="flashcard" class="flashcard">
+                <div class="card-front">
+                    <div class="card-label">ACTION</div>
+                    <h2 id="action-text">Loading...</h2>
+                </div>
+                
+                <div id="card-back" class="card-back" style="display: none;">
+                    <div class="card-label">SHORTCUT</div>
+                    <div class="keys-display">
+                        <span id="excel-keys" class="key-code">Ctrl + C</span>
+                        <span class="divider">vs</span>
+                        <span id="sheet-keys" class="key-code">Ctrl + C</span>
+                    </div>
+                    <div class="platform-labels">
+                        <span>Excel</span>
+                        <span>Sheets</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-area">
+            <button id="revealBtn" class="action-btn">Reveal Answer</button>
+            
+            <div id="rating-btns" style="display: none;">
+                <button id="missBtn" class="rate-btn miss">❌ I Forgot</button>
+                <button id="gotBtn" class="rate-btn got">✅ I Knew It</button>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">Loading Database...</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
