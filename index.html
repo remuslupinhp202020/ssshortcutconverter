@@ -15,9 +15,8 @@
             <p class="subtitle">The ultimate Excel &harr; Google Sheets Reference</p>
         </header>
 
-        <!-- Centered Controls -->
+        <!-- Controls -->
         <div class="controls-wrapper">
-            <!-- OS Switch -->
             <div class="toggle-pill">
                 <span class="label">Win</span>
                 <label class="switch">
@@ -27,7 +26,6 @@
                 <span class="label">Mac</span>
             </div>
 
-            <!-- Direction Switch -->
             <div class="toggle-pill">
                 <span class="label">Excel</span>
                 <label class="switch direction-switch">
@@ -42,14 +40,35 @@
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search 'Pivot', 'Macro', or 'Ctrl+C'...">
         </div>
+
+        <!-- NEW: Legend / Tips Section -->
+        <div class="legend-box">
+            <div class="legend-item">
+                <div class="legend-header">
+                    <span class="type-tag tag-hold">Hold</span> 
+                    <span class="legend-key">Ctrl + P</span>
+                </div>
+                <p>Where keys must be pressed together. <br><em>(e.g. Press Ctrl and P at the same time)</em></p>
+            </div>
+            
+            <div class="legend-divider"></div>
+
+            <div class="legend-item">
+                <div class="legend-header">
+                    <span class="type-tag tag-seq">Sequential</span> 
+                    <span class="legend-key">Alt + H , A C</span>
+                </div>
+                <p>Where keys must be pressed one after another. <br><em>(e.g. Press Alt+H together, release, then press A, then C)</em></p>
+            </div>
+        </div>
         
-        <!-- Instructional Text -->
+        <!-- Mode Indicator -->
         <div id="instruction-text" class="helper-text">Mode: Windows | Excel &rarr; Sheets</div>
 
-        <!-- "Did You Know" Smart Alert (Hidden by default) -->
+        <!-- Smart Alert -->
         <div id="differencesContainer" class="smart-alert" style="display: none;"></div>
 
-        <!-- Results List -->
+        <!-- Results -->
         <div id="loading" class="loading">Connecting to database...</div>
         <div id="resultsContainer" class="results-list"></div>
     </div>
