@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastery Quiz</title>
+    <!-- Link to Main CSS for fonts/vars -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <!-- Header / Progress -->
+        <div class="quiz-header">
+            <div class="progress-info">
+                <span id="q-number">Question 1</span>
+                <span class="difficulty-badge" id="diff-badge">Easy</span>
+            </div>
+            <div class="score-display">Score: <span id="score">0</span></div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-bar">
+            <label>Topic:</label>
+            <select id="topicSelect">
+                <option value="all">All Topics</option>
+                <option value="Excel">Excel</option>
+                <option value="Sheets">Google Sheets</option>
+                <option value="Power">Power Query/Pivot</option>
+            </select>
+            
+            <label>Level:</label>
+            <select id="levelSelect">
+                <option value="all">All Levels</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+            <button id="startBtn">Start Quiz</button>
+        </div>
+
+        <!-- Question Card -->
+        <div id="game-area" style="display:none;">
+            <h2 id="question-text">Loading...</h2>
+            
+            <div class="options-grid" id="options-container">
+                <!-- Options injected by JS -->
+            </div>
+
+            <!-- Feedback Area -->
+            <div id="feedback" class="feedback-box" style="display:none;">
+                <h3 id="feedback-title">Correct!</h3>
+                <p id="feedback-text">Explanation goes here.</p>
+                <button id="nextBtn">Next Question &rarr;</button>
+            </div>
+        </div>
+        
+        <div id="loading" class="loading">Loading Quiz Data...</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
