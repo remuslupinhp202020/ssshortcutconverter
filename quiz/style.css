@@ -63,12 +63,14 @@ button:hover { opacity: 0.9; }
 
 .option-btn {
     background: white;
+    color: #1f2937; /* <--- THIS FIXES THE INVISIBLE TEXT */
     border: 2px solid #e5e7eb;
     padding: 15px;
     border-radius: 8px;
     text-align: left;
     cursor: pointer;
     font-size: 1rem;
+    font-weight: 500;
     transition: all 0.2s;
 }
 
