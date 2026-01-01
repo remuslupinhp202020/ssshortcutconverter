@@ -1,5 +1,5 @@
 // REPLACE WITH YOUR APPS SCRIPT URL
-const API_URL = "YOUR_APPS_SCRIPT_URL_HERE"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbyCVYvwe5Zz2aSIWZt-zaAu75_1RYHa-5Abb3HB02x0nj_jY3fnK10RfIJsaAdabzau5Q/exec"; 
 
 let allQuestions = [];
 let currentPool = [];
