@@ -5,8 +5,12 @@
     --text-dark: #1f2937;
     --text-light: #6b7280;
     --border-radius: 12px;
+    
+    /* Brand Colors */
     --excel: #107c41;
     --sheets: #0f9d58;
+    --win-blue: #0078d7; /* Distinct Windows Blue */
+    --mac-dark: #111827; /* Mac Dark styling */
 }
 
 body {
@@ -21,7 +25,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 700px; /* Restricts width for that "clean" look */
+    max-width: 700px;
 }
 
 header { text-align: center; margin-bottom: 25px; }
@@ -49,14 +53,25 @@ h1 { margin: 0; font-weight: 700; letter-spacing: -0.5px; }
 
 .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
 .switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #9ca3af; transition: .4s; border-radius: 34px; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; transition: .4s; border-radius: 34px; }
 .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
 
-input:checked + .slider { background-color: var(--primary); }
+/* --- FIXED OS TOGGLE (Blue on both sides) --- */
+/* Default (Windows - Unchecked) */
+#osToggle:not(:checked) + .slider {
+    background-color: var(--win-blue); /* Windows Blue */
+}
+/* Checked (Mac) */
+#osToggle:checked + .slider {
+    background-color: var(--mac-dark); /* Dark Blue/Black for Mac */
+}
+/* Move slider knob */
 input:checked + .slider:before { transform: translateX(18px); }
 
+/* --- Direction Toggle (Green) --- */
 .direction-switch input:not(:checked) + .slider { background-color: var(--excel); }
 .direction-switch input:checked + .slider { background-color: var(--sheets); }
+
 
 /* Search */
 .search-box input {
@@ -74,7 +89,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .helper-text { text-align: center; font-size: 0.85rem; color: var(--text-light); margin-top: 10px; margin-bottom: 20px; }
 
-/* Smart Alert (The "Differences" Box) */
+/* Smart Alert */
 .smart-alert {
     background: #eff6ff;
     border-left: 4px solid var(--primary);
@@ -111,6 +126,29 @@ input:checked + .slider:before { transform: translateX(18px); }
 .target-badge { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; font-weight: bold; }
 .arrow { color: #9ca3af; }
 
-.type-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #9ca3af; font-weight: bold; background: #f9fafb; padding: 4px 8px; border-radius: 4px; }
+/* --- NEW TAG STYLES --- */
+.type-tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* Orange for Hold */
+.tag-hold {
+    background-color: #fff7ed;
+    color: #c2410c; /* Dark Orange */
+    border: 1px solid #ffedd5;
+}
+
+/* Teal/Green for Sequential */
+.tag-seq {
+    background-color: #f0fdf4;
+    color: #15803d; /* Dark Green */
+    border: 1px solid #dcfce7;
+}
 
 .loading { text-align: center; color: var(--text-light); font-style: italic; margin-top: 30px; }
