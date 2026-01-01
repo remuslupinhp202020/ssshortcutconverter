@@ -91,60 +91,87 @@
         </div>
 
         <!-- TAB 2: PLATFORM GUIDE -->
+       <!-- TAB 2: PLATFORM GUIDE -->
         <div id="guide" class="tab-content">
             
+            <!-- SECTION 1: THE DATA ANALYST ECOSYSTEM -->
             <div class="guide-card">
-                <h2>📊 Excel vs. Google Sheets</h2>
+                <h2>🚀 The Data Analyst Career Path</h2>
+                <p style="color:#666; margin-bottom:20px; line-height:1.6;">
+                    If you are aiming for a career in Data Analysis, the choice of tool defines your workflow. 
+                    Microsoft's stack is vertical (Deep Analysis), while Google's stack is horizontal (Connectivity).
+                </p>
                 <div class="guide-grid">
                     <div class="guide-col">
-                        <h3>When to use Excel</h3>
+                        <h3>Why Excel & Power BI?</h3>
                         <ul>
-                            <li><strong>Massive Data:</strong> You have over 500,000 rows.</li>
-                            <li><strong>Complex Modeling:</strong> You need heavy financial modeling with circular references or Monte Carlo simulations.</li>
-                            <li><strong>Printing:</strong> You need precise control over page breaks, headers, and ink.</li>
-                            <li><strong>Legacy Macros:</strong> Your company relies on old VBA macros that cannot be rewritten.</li>
-                            <li><strong>Security:</strong> You work offline or with highly sensitive data that cannot touch the cloud.</li>
+                            <li><strong>The Power Query Engine (ETL):</strong> Excel contains an enterprise-grade ETL tool called Power Query. It allows you to clean, merge, and unpivot millions of rows of messy data automatically. Google Sheets has no native equivalent.</li>
+                            <li><strong>The Bridge to Power BI:</strong> Excel and Power BI share the same engines (Power Query for cleanup, DAX for formulas). Learning modern Excel is literally learning 50% of Power BI.</li>
+                            <li><strong>The Data Model (Power Pivot):</strong> Excel can store 100 million+ rows in its internal "Data Model" (compressed) while showing you a blank sheet. You can build relationships between tables (SQL-style) without writing code.</li>
                         </ul>
                     </div>
                     <div class="guide-col">
-                        <h3>When to use Sheets</h3>
+                        <h3>Where Google Sheets Fits</h3>
                         <ul>
-                            <li><strong>Collaboration:</strong> Multiple people need to edit at the exact same time.</li>
-                            <li><strong>Connectivity:</strong> You need live stock data (<code>GOOGLEFINANCE</code>) or translation (<code>GOOGLETRANSLATE</code>).</li>
-                            <li><strong>Simplicity:</strong> You want a clean interface without 500 menu options.</li>
-                            <li><strong>Automation:</strong> You want to easily connect forms, emails, and calendar events via Apps Script.</li>
-                            <li><strong>Cost:</strong> You need a free, zero-install solution for a team.</li>
+                            <li><strong>Operational Dashboards:</strong> Sheets is superior for "Right Now" data. Marketing teams use it to pull live ad spend data via plugins (Supermetrics) because Excel requires a manual refresh.</li>
+                            <li><strong>The "Lite" Analyst:</strong> You can do 80% of data analysis in Sheets using Pivot Tables and the <code>QUERY</code> function (which brings SQL logic into cells).</li>
+                            <li><strong>Python/SQL Integration:</strong> Sheets integrates natively with BigQuery and now supports Python on the web, making it a lightweight data science interface.</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
+            <!-- SECTION 2: VISUALIZATION & DASHBOARDS -->
             <div class="guide-card">
-                <h2>💻 Windows vs. Mac</h2>
+                <h2>🎨 Visuals & Dashboards</h2>
                 <div class="guide-grid">
                     <div class="guide-col">
-                        <h3>When to use Windows</h3>
+                        <h3>Excel: Pixel Perfect</h3>
                         <ul>
-                            <li><strong>Power User:</strong> You live in Excel 8 hours a day. Windows Excel is the "True" version.</li>
-                            <li><strong>Shortcuts:</strong> The <code>Alt</code> key Ribbon shortcuts do not exist on Mac.</li>
-                            <li><strong>Power Pivot:</strong> You need the Data Model or Power Query (Mac version is limited).</li>
-                            <li><strong>Add-ins:</strong> You use specific industry plugins (Bloomberg, CapIQ) that are Windows-only.</li>
+                            <li><strong>Complex Charts:</strong> Native support for Waterfall, Sunburst, Funnel, and Box & Whisker charts.</li>
+                            <li><strong>Formatting Control:</strong> You can control the exact pixel width of lines, shadow effects, and 3D rotations. Essential for C-Suite PDF reports.</li>
+                            <li><strong>Slicers & Timelines:</strong> Interactive buttons that filter multiple charts and Pivot Tables instantly. This creates an "App-like" feel for dashboards.</li>
                         </ul>
                     </div>
                     <div class="guide-col">
-                        <h3>When to use Mac</h3>
+                        <h3>Sheets: Web Ready</h3>
                         <ul>
-                            <li><strong>Casual Use:</strong> You do basic tables and sums.</li>
-                            <li><strong>Ecosystem:</strong> You work primarily in Keynote/Pages and just need to view data.</li>
-                            <li><strong>Display:</strong> You prefer high-resolution text rendering (Retina display).</li>
-                            <li><em>Warning:</em> Expect frustration with advanced keyboard shortcuts on Mac Excel.</li>
+                            <li><strong>Embeddability:</strong> Charts can be embedded live into Google Slides. When the data changes, the slide updates with one click. Excel to PowerPoint links are notoriously fragile.</li>
+                            <li><strong>Sparklines:</strong> Sheets has a unique <code>SPARKLINE</code> formula to create bar charts and line graphs <em>inside</em> a single cell. Excel requires a menu to do this.</li>
+                            <li><strong>Simplicity:</strong> Charts look clean and modern by default with less "clutter" than Excel defaults.</li>
                         </ul>
                     </div>
                 </div>
             </div>
+
+            <!-- SECTION 3: THE MAC VS WINDOWS REALITY -->
+            <div class="guide-card">
+                <h2>💻 The Mac Limitation (Read Carefully)</h2>
+                <p style="color:#666; margin-bottom:20px;">
+                    Many users switch to Mac and realize too late that <strong>Excel for Mac is not the same software</strong> as Excel for Windows. It is a "surface-level" twin.
+                </p>
+                <div class="guide-grid">
+                    <div class="guide-col">
+                        <h3>❌ What Mac Excel is MISSING</h3>
+                        <ul>
+                            <li><strong>No Power Pivot:</strong> The internal database engine (Data Model) does not exist on Mac. You cannot build complex relational models.</li>
+                            <li><strong>Limited Power Query:</strong> While Mac recently added Power Query, it is often slower and lacks connectors to specific databases (like SQL Server or Azure) compared to Windows.</li>
+                            <li><strong>No COM Add-ins:</strong> Professional financial plugins (Bloomberg, FactSet, CapIQ) run on .NET frameworks that only exist in Windows. They will not work on Mac.</li>
+                            <li><strong>Keyboard Layout:</strong> The famous "Alt" key ribbon shortcuts (e.g., <code>Alt, H, A, C</code>) do not work. You must use slower mouse clicks or memorize complex Mac-specific chords.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-col">
+                        <h3>✅ When Mac Excel is Fine</h3>
+                        <ul>
+                            <li><strong>General Use:</strong> If you are building standard budgets, lists, or using VLOOKUP/XLOOKUP, Mac Excel is beautiful and stable.</li>
+                            <li><strong>Retina Display:</strong> Text and numbers render significantly sharper on Mac screens than Windows, reducing eye strain for basic tasks.</li>
+                            <li><strong>Scripts:</strong> Mac uses AppleScript (automator) instead of VBA for OS-level tasks, though this is a dying skill.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-    </div>
 
     <script src="script.js"></script>
     <script>
