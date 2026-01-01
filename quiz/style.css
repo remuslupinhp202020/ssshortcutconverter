@@ -1,214 +1,178 @@
-/* Transparent body to blend with iframe */
-body { 
-    background: transparent; 
-    padding: 0; 
-    margin: 0; 
+/* Transparent body to blend with the main site */
+body {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif; /* Inherit font preference */
 }
 
-.trainer-container {
+.quiz-container {
     padding: 20px;
     background: #fff;
     height: 100%;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    overflow-y: auto; /* Allows scrolling if content gets tall */
 }
 
-/* --- HEADER (Fixed Spacing) --- */
-.trainer-header {
-    width: 100%;
+/* --- HEADER --- */
+.quiz-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-    padding: 0 5px;
-    box-sizing: border-box;
-    color: #64748b;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.progress-info {
     font-weight: 600;
+    color: #374151;
+    display: flex;
+    align-items: center;
 }
 
-.streak-box { 
-    color: #ea580c; 
-    font-size: 1.1rem; 
+.score-display {
     font-weight: 700;
+    color: #2563eb; /* Brand Blue */
+}
+
+/* Difficulty Badges */
+.difficulty-badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #e5e7eb;
+    margin-left: 10px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+.diff-easy { background: #dcfce7; color: #166534; }
+.diff-medium { background: #fef9c3; color: #854d0e; }
+.diff-hard { background: #fee2e2; color: #991b1b; }
+
+/* --- FILTER BAR (Start Screen) --- */
+.filter-bar {
     display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
     align-items: center;
-    gap: 6px;
-}
-
-/* Right side container */
-.settings {
-    display: flex;
-    align-items: center;
-    gap: 12px; /* Fixed gap between toggle and text */
-    font-size: 0.9rem;
-}
-
-/* Small Toggle Switch */
-.switch-sm { 
-    position: relative; 
-    display: inline-block; 
-    width: 36px; 
-    height: 20px; 
-    margin: 0;
-    flex-shrink: 0;
-}
-
-.switch-sm input { opacity: 0; width: 0; height: 0; }
-
-.slider-sm { 
-    position: absolute; cursor: pointer; 
-    top: 0; left: 0; right: 0; bottom: 0; 
-    background-color: #cbd5e1; /* Grey (Windows default) */
-    transition: .4s; 
-    border-radius: 34px; 
-}
-
-.slider-sm:before { 
-    position: absolute; content: ""; 
-    height: 14px; width: 14px; 
-    left: 3px; bottom: 3px; 
-    background-color: white; 
-    transition: .4s; 
-    border-radius: 50%; 
-}
-
-/* Blue when active (Mac) */
-input:checked + .slider-sm { background-color: #2563eb; }
-input:checked + .slider-sm:before { transform: translateX(16px); }
-
-/* --- CARD AREA --- */
-.card-area { 
-    width: 100%; 
-    max-width: 500px; 
-    perspective: 1000px; 
-    margin-bottom: 30px; 
-    flex-grow: 1; /* Pushes controls to bottom if needed */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.flashcard {
-    background: white;
-    border: 2px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 40px 30px;
-    text-align: center;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    transition: transform 0.3s;
-    width: 100%;
-}
-
-.card-label { 
-    font-size: 0.75rem; 
-    text-transform: uppercase; 
-    color: #94a3b8; 
-    font-weight: 700; 
-    letter-spacing: 1px; 
-    margin-bottom: 15px; 
-}
-
-#action-text { 
-    margin: 0; 
-    color: #1e293b; 
-    font-size: 1.6rem; 
-    line-height: 1.4;
-}
-
-/* --- BACK OF CARD --- */
-.card-back { 
-    margin-top: 30px; 
-    padding-top: 30px; 
-    border-top: 1px dashed #cbd5e1; 
-    animation: fadeIn 0.3s ease; 
-}
-
-.keys-display { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 15px; 
-    margin-bottom: 8px; 
     flex-wrap: wrap;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
 }
 
-.key-code { 
-    background: #f1f5f9; 
-    padding: 10px 14px; 
-    border-radius: 8px; 
-    font-family: monospace; 
-    font-weight: 700; 
-    font-size: 1.25rem; 
-    color: #0f172a; 
-    border: 1px solid #cbd5e1;
-    white-space: nowrap;
+.filter-bar label { font-weight: 600; font-size: 0.9rem; color: #4b5563; }
+
+select { 
+    padding: 8px 12px; 
+    border-radius: 6px; 
+    border: 1px solid #ccc; 
+    background: white;
+    cursor: pointer;
 }
 
-.divider { color: #94a3b8; font-style: italic; font-size: 0.9rem; }
-
-.platform-labels { 
-    display: flex; 
-    justify-content: center; 
-    gap: 60px; 
-    font-size: 0.75rem; 
-    color: #64748b; 
-    margin-top: 5px; 
-}
-
-/* --- CONTROLS / BUTTONS --- */
-.controls-area {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    height: 60px; /* Fixed height to prevent jumping */
-}
-
-.action-btn {
+button#startBtn {
     background: #2563eb; 
     color: white; 
-    border: none; 
-    padding: 12px 35px;
-    border-radius: 50px; 
-    font-size: 1rem; 
-    font-weight: 600; 
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(37,99,235,0.25); 
-    transition: transform 0.1s;
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-weight: 600;
+    margin-left: auto; /* Pushes button to the right */
+}
+button#startBtn:hover { background: #1d4ed8; }
+
+/* --- GAME AREA --- */
+#question-text { 
+    margin-top: 0; 
+    color: #111827; 
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-bottom: 25px;
 }
 
-.action-btn:hover { transform: translateY(-2px); }
-.action-btn:active { transform: translateY(0); }
-
-#rating-btns {
-    display: none; /* Hidden by default */
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 Columns */
     gap: 15px;
 }
 
-.rate-btn {
-    border: none; 
-    padding: 12px 25px; 
-    border-radius: 50px;
-    font-weight: 600; 
-    cursor: pointer; 
-    font-size: 0.95rem;
-    transition: transform 0.1s;
+/* OPTION BUTTONS (Fixed: Text Color added) */
+.option-btn {
+    background: white;
+    color: #1f2937; /* <--- CRITICAL FIX: Dark text */
+    border: 2px solid #e5e7eb;
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    line-height: 1.4;
 }
 
-.rate-btn:hover { transform: translateY(-2px); }
+.option-btn:hover { 
+    border-color: #2563eb; 
+    background: #eff6ff; 
+}
 
-.miss { background: #fee2e2; color: #991b1b; }
-.got { background: #dcfce7; color: #166534; }
+/* Correct/Wrong States */
+.option-btn.correct { 
+    background: #dcfce7 !important; 
+    border-color: #22c55e !important; 
+    color: #14532d !important;
+}
+
+.option-btn.wrong { 
+    background: #fee2e2 !important; 
+    border-color: #ef4444 !important; 
+    color: #7f1d1d !important;
+}
+
+/* --- FEEDBACK BOX --- */
+.feedback-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f0f9ff;
+    border-radius: 8px;
+    border-left: 5px solid #2563eb;
+    animation: slideUp 0.3s ease;
+}
+
+#feedback-title { margin: 0 0 10px 0; font-size: 1.1rem; }
+#feedback-text { margin: 0 0 15px 0; color: #4b5563; line-height: 1.5; }
+
+#nextBtn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+#nextBtn:hover { background: #1d4ed8; }
 
 .loading { 
-    position: absolute; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%);
-    color: #64748b; font-style: italic; 
+    text-align: center; 
+    color: #6b7280; 
+    margin-top: 40px; 
+    font-style: italic; 
 }
 
-@keyframes fadeIn { 
-    from { opacity: 0; transform: translateY(5px); } 
-    to { opacity: 1; transform: translateY(0); } 
+@keyframes slideUp { 
+    from {transform: translateY(10px); opacity: 0;} 
+    to {transform: translateY(0); opacity: 1;} 
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; } /* Stack buttons vertically on mobile */
+    .filter-bar { flex-direction: column; align-items: stretch; }
+    button#startBtn { margin-left: 0; }
 }
