@@ -17,6 +17,7 @@ const els = {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
+    // Auto-detect Mac
     if (navigator.platform.toUpperCase().includes('MAC')) {
         state.isMac = true;
         els.osToggle.checked = true;
@@ -25,18 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchData();
 });
 
-// Fetch
+// Fetch & Clean Data
 async function fetchData() {
     try {
         const res = await fetch(API_URL);
         const json = await res.json();
+        
         appData.shortcuts = cleanDataKeys(json.shortcuts);
         appData.differences = cleanDataKeys(json.differences);
+        
         els.loading.style.display = 'none';
         render(appData.shortcuts); 
     } catch (err) {
         console.error(err);
-        els.loading.textContent = "Error: Check Console.";
+        els.loading.textContent = "Error loading database.";
     }
 }
 
@@ -75,7 +78,7 @@ function updateInstruction() {
     els.instruction.innerHTML = `Mode: <strong>${os}</strong> | ${flow}`;
 }
 
-// Filter
+// Logic
 function filterShortcuts(query) {
     const q = query.toLowerCase();
     const filtered = appData.shortcuts.filter(item => 
@@ -84,12 +87,11 @@ function filterShortcuts(query) {
     render(filtered);
 }
 
-// Render
 function render(data) {
     els.results.innerHTML = '';
     
     if (data.length === 0) {
-        els.results.innerHTML = '<div style="text-align:center; color:#999">No shortcuts found.</div>';
+        els.results.innerHTML = '<div style="text-align:center; color:#999; margin-top:20px;">No shortcuts found.</div>';
         return;
     }
 
@@ -100,10 +102,10 @@ function render(data) {
 
         const sVal = item[sourceCol] || "N/A";
         const tVal = item[targetCol] || "N/A";
-        
-        // --- NEW LOGIC FOR TAG COLORS ---
+
+        // Determine Tag Color
         const typeStr = (item.type || "").toLowerCase();
-        let typeClass = "type-tag"; // default
+        let typeClass = "type-tag";
         if (typeStr.includes("hold")) typeClass += " tag-hold";
         else if (typeStr.includes("seq")) typeClass += " tag-seq";
 
