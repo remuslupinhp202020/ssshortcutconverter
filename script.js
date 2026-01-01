@@ -132,14 +132,30 @@ function showDifferences(query) {
         return;
     }
     const q = query.toLowerCase();
-    const match = appData.differences.find(d => 
+    
+    // CHANGE 1: Use .filter() to get ALL matches, not just the first one
+    const matches = appData.differences.filter(d => 
         (d.keywords && d.keywords.toLowerCase().includes(q)) || 
         (d.title && d.title.toLowerCase().includes(q))
     );
 
-    if (match) {
+    if (matches.length > 0) {
         els.diffBox.style.display = 'block';
-        els.diffBox.innerHTML = `<strong>💡 ${match.title}</strong> ${match.content}`;
+        
+        // CHANGE 2: Map through all matches and join them
+        // We add a 'margin-bottom' to separate multiple tips
+        els.diffBox.innerHTML = matches.map(match => `
+            <div style="margin-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 12px;">
+                <strong>💡 ${match.title}</strong> 
+                ${match.content}
+            </div>
+        `).join('');
+        
+        // Remove the border from the very last item to look clean
+        els.diffBox.lastElementChild.style.borderBottom = 'none';
+        els.diffBox.lastElementChild.style.marginBottom = '0';
+        els.diffBox.lastElementChild.style.paddingBottom = '0';
+
     } else {
         els.diffBox.style.display = 'none';
     }
