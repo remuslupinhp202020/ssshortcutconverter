@@ -1,149 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shortcut Master</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+/* --- TABS NAVIGATION --- */
+.tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
 
-    <div class="container">
-        <header>
-            <h1>Shortcut Master</h1>
-            <p class="subtitle">Excel &harr; Google Sheets Reference</p>
-        </header>
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
 
-        <!-- NEW: Tab Navigation -->
-        <div class="tabs-nav">
-            <button class="tab-btn active" onclick="openTab('converter')">Converter Tool</button>
-            <button class="tab-btn" onclick="openTab('guide')">Platform Guide</button>
-        </div>
+.tab-btn:hover {
+    color: var(--primary);
+    background: #f0f4ff;
+    border-radius: 6px 6px 0 0;
+}
 
-        <!-- TAB 1: THE CONVERTER (Your existing tool) -->
-        <div id="converter" class="tab-content active">
-            
-            <!-- Controls -->
-            <div class="controls-wrapper">
-                <div class="toggle-pill">
-                    <span class="label">Win</span>
-                    <label class="switch">
-                        <input type="checkbox" id="osToggle">
-                        <span class="slider"></span>
-                    </label>
-                    <span class="label">Mac</span>
-                </div>
-                <div class="toggle-pill">
-                    <span class="label">Excel</span>
-                    <label class="switch direction-switch">
-                        <input type="checkbox" id="dirToggle">
-                        <span class="slider"></span>
-                    </label>
-                    <span class="label">Sheets</span>
-                </div>
-            </div>
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
 
-            <!-- Search -->
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search 'Pivot', 'Macro', or keys...">
-            </div>
+/* Hide content by default */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
 
-            <!-- Legend -->
-            <div class="tips-card">
-                <div class="tip-column">
-                    <div class="tip-header">
-                        <span class="type-tag tag-hold">HOLD</span>
-                        <span class="tip-example">Ctrl + P</span>
-                    </div>
-                    <p class="tip-text"><strong>Simultaneous Action:</strong> Hold keys together.</p>
-                </div>
-                <div class="tip-divider"></div>
-                <div class="tip-column">
-                    <div class="tip-header">
-                        <span class="type-tag tag-seq">SEQUENTIAL</span>
-                        <span class="tip-example">Alt, H, A, C</span>
-                    </div>
-                    <p class="tip-text"><strong>Chain Command:</strong> Press one after another.</p>
-                </div>
-            </div>
+/* Show active content */
+.tab-content.active {
+    display: block;
+}
 
-            <div id="instruction-text" class="helper-text">Mode: Windows | Excel &rarr; Sheets</div>
-            <div id="differencesContainer" class="smart-alert" style="display: none;"></div>
-            <div id="loading" class="loading">Connecting to database...</div>
-            <div id="resultsContainer" class="results-list"></div>
-        </div>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        <!-- TAB 2: THE GUIDE (New Content) -->
-        <div id="guide" class="tab-content">
-            <div class="guide-card">
-                <h2>📊 Excel vs. Google Sheets</h2>
-                <div class="guide-grid">
-                    <div class="guide-col">
-                        <h3>When to use Excel</h3>
-                        <ul>
-                            <li><strong>Massive Data:</strong> You have over 500,000 rows.</li>
-                            <li><strong>Complex Modeling:</strong> You need heavy financial modeling with circular references or Monte Carlo simulations.</li>
-                            <li><strong>Printing:</strong> You need precise control over page breaks, headers, and ink.</li>
-                            <li><strong>Legacy Macros:</strong> Your company relies on old VBA macros that cannot be rewritten.</li>
-                            <li><strong>Security:</strong> You work offline or with highly sensitive data that cannot touch the cloud.</li>
-                        </ul>
-                    </div>
-                    <div class="guide-col">
-                        <h3>When to use Sheets</h3>
-                        <ul>
-                            <li><strong>Collaboration:</strong> Multiple people need to edit at the exact same time.</li>
-                            <li><strong>Connectivity:</strong> You need live stock data (<code>GOOGLEFINANCE</code>) or translation (<code>GOOGLETRANSLATE</code>).</li>
-                            <li><strong>Simplicity:</strong> You want a clean interface without 500 menu options.</li>
-                            <li><strong>Automation:</strong> You want to easily connect forms, emails, and calendar events via Apps Script.</li>
-                            <li><strong>Cost:</strong> You need a free, zero-install solution for a team.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+/* --- GUIDE CARD STYLING --- */
+.guide-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    border: 1px solid #e5e7eb;
+}
 
-            <div class="guide-card">
-                <h2>💻 Windows vs. Mac</h2>
-                <div class="guide-grid">
-                    <div class="guide-col">
-                        <h3>When to use Windows</h3>
-                        <ul>
-                            <li><strong>Power User:</strong> You live in Excel 8 hours a day. Windows Excel is the "True" version.</li>
-                            <li><strong>Shortcuts:</strong> The <code>Alt</code> key Ribbon shortcuts do not exist on Mac.</li>
-                            <li><strong>Power Pivot:</strong> You need the Data Model or Power Query (Mac version is limited).</li>
-                            <li><strong>Add-ins:</strong> You use specific industry plugins (Bloomberg, CapIQ) that are Windows-only.</li>
-                        </ul>
-                    </div>
-                    <div class="guide-col">
-                        <h3>When to use Mac</h3>
-                        <ul>
-                            <li><strong>Casual Use:</strong> You do basic tables and sums.</li>
-                            <li><strong>Ecosystem:</strong> You work primarily in Keynote/Pages and just need to view data.</li>
-                            <li><strong>Display:</strong> You prefer high-resolution text rendering (Retina display).</li>
-                            <li><em>Warning:</em> Expect frustration with advanced keyboard shortcuts on Mac Excel.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+.guide-card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
 
-    </div>
+.guide-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
 
-    <script src="script.js"></script>
-    <script>
-        // Simple Tab Switcher
-        function openTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            // Show selected
-            document.getElementById(tabId).classList.add('active');
-            
-            // Highlight button
-            // Find the button that calls this function... simplified for this snippet:
-            event.target.classList.add('active');
-        }
-    </script>
-</body>
-</html>
+.guide-col h3 {
+    color: var(--primary);
+    margin-top: 0;
+}
+
+.guide-col ul {
+    padding-left: 20px;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.guide-col li {
+    margin-bottom: 10px;
+}
+
+/* Mobile responsive for Guide */
+@media (max-width: 600px) {
+    .guide-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
