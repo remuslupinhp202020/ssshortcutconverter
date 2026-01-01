@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortcut Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Shortcut Converter</h1>
+            <p class="subtitle">Seamlessly switch between Excel and Google Sheets</p>
+        </header>
+
+        <!-- Direction Toggle -->
+        <div class="toggle-container">
+            <span id="label-excel">Excel</span>
+            <label class="switch">
+                <input type="checkbox" id="modeToggle">
+                <span class="slider round"></span>
+            </label>
+            <span id="label-gsheet">Google Sheets</span>
+        </div>
+        <p class="mode-text">Converting: <span id="mode-display">Excel &rarr; Google Sheets</span></p>
+
+        <!-- Search Section -->
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" placeholder="Type a shortcut (e.g. Ctrl+C) or description...">
+        </div>
+
+        <!-- Search Tips -->
+        <div class="tips-box">
+            <h3>Search Tips:</h3>
+            <ul>
+                <li><strong>Hold Keys:</strong> Use <code>+</code> (e.g., "Ctrl+Shift+V")</li>
+                <li><strong>Sequential:</strong> Use <code>,</code> or space (e.g., "Alt, H, A, C")</li>
+            </ul>
+        </div>
+
+        <!-- Results Output -->
+        <div id="loading" class="loading">Loading shortcuts...</div>
+        <div id="resultsContainer" class="results-grid"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
