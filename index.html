@@ -15,72 +15,135 @@
             <p class="subtitle">Excel &harr; Google Sheets Reference</p>
         </header>
 
-        <!-- Controls (Stack on mobile) -->
-        <div class="controls-wrapper">
-            <!-- OS Switch -->
-            <div class="toggle-pill">
-                <span class="label">Win</span>
-                <label class="switch">
-                    <input type="checkbox" id="osToggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="label">Mac</span>
-            </div>
-
-            <!-- Direction Switch -->
-            <div class="toggle-pill">
-                <span class="label">Excel</span>
-                <label class="switch direction-switch">
-                    <input type="checkbox" id="dirToggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="label">Sheets</span>
-            </div>
+        <!-- NEW: Tab Navigation -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('converter')">Converter Tool</button>
+            <button class="tab-btn" onclick="openTab('guide')">Platform Guide</button>
         </div>
 
-        <!-- Search Bar -->
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search 'Pivot', 'Macro', or keys...">
-        </div>
-
-        <!-- Legend / Tips (Responsive Card) -->
-        <div class="tips-card">
-            <!-- Left Side: Hold -->
-            <div class="tip-column">
-                <div class="tip-header">
-                    <span class="type-tag tag-hold">HOLD</span>
-                    <span class="tip-example">Ctrl + P</span>
+        <!-- TAB 1: THE CONVERTER (Your existing tool) -->
+        <div id="converter" class="tab-content active">
+            
+            <!-- Controls -->
+            <div class="controls-wrapper">
+                <div class="toggle-pill">
+                    <span class="label">Win</span>
+                    <label class="switch">
+                        <input type="checkbox" id="osToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="label">Mac</span>
                 </div>
-                <p class="tip-text">
-                    <strong>Simultaneous Action:</strong> When keys are linked by a plus sign, hold them all down at the same time.
-                </p>
+                <div class="toggle-pill">
+                    <span class="label">Excel</span>
+                    <label class="switch direction-switch">
+                        <input type="checkbox" id="dirToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="label">Sheets</span>
+                </div>
             </div>
 
-            <div class="tip-divider"></div>
+            <!-- Search -->
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search 'Pivot', 'Macro', or keys...">
+            </div>
 
-            <!-- Right Side: Sequential -->
-            <div class="tip-column">
-                <div class="tip-header">
-                    <span class="type-tag tag-seq">SEQUENTIAL</span>
-                    <span class="tip-example">Alt, H, A, C</span>
+            <!-- Legend -->
+            <div class="tips-card">
+                <div class="tip-column">
+                    <div class="tip-header">
+                        <span class="type-tag tag-hold">HOLD</span>
+                        <span class="tip-example">Ctrl + P</span>
+                    </div>
+                    <p class="tip-text"><strong>Simultaneous Action:</strong> Hold keys together.</p>
                 </div>
-                <p class="tip-text">
-                    <strong>Chain Command:</strong> When keys are separated by commas, press and release them strictly one after another.
-                </p>
+                <div class="tip-divider"></div>
+                <div class="tip-column">
+                    <div class="tip-header">
+                        <span class="type-tag tag-seq">SEQUENTIAL</span>
+                        <span class="tip-example">Alt, H, A, C</span>
+                    </div>
+                    <p class="tip-text"><strong>Chain Command:</strong> Press one after another.</p>
+                </div>
+            </div>
+
+            <div id="instruction-text" class="helper-text">Mode: Windows | Excel &rarr; Sheets</div>
+            <div id="differencesContainer" class="smart-alert" style="display: none;"></div>
+            <div id="loading" class="loading">Connecting to database...</div>
+            <div id="resultsContainer" class="results-list"></div>
+        </div>
+
+        <!-- TAB 2: THE GUIDE (New Content) -->
+        <div id="guide" class="tab-content">
+            <div class="guide-card">
+                <h2>📊 Excel vs. Google Sheets</h2>
+                <div class="guide-grid">
+                    <div class="guide-col">
+                        <h3>When to use Excel</h3>
+                        <ul>
+                            <li><strong>Massive Data:</strong> You have over 500,000 rows.</li>
+                            <li><strong>Complex Modeling:</strong> You need heavy financial modeling with circular references or Monte Carlo simulations.</li>
+                            <li><strong>Printing:</strong> You need precise control over page breaks, headers, and ink.</li>
+                            <li><strong>Legacy Macros:</strong> Your company relies on old VBA macros that cannot be rewritten.</li>
+                            <li><strong>Security:</strong> You work offline or with highly sensitive data that cannot touch the cloud.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-col">
+                        <h3>When to use Sheets</h3>
+                        <ul>
+                            <li><strong>Collaboration:</strong> Multiple people need to edit at the exact same time.</li>
+                            <li><strong>Connectivity:</strong> You need live stock data (<code>GOOGLEFINANCE</code>) or translation (<code>GOOGLETRANSLATE</code>).</li>
+                            <li><strong>Simplicity:</strong> You want a clean interface without 500 menu options.</li>
+                            <li><strong>Automation:</strong> You want to easily connect forms, emails, and calendar events via Apps Script.</li>
+                            <li><strong>Cost:</strong> You need a free, zero-install solution for a team.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h2>💻 Windows vs. Mac</h2>
+                <div class="guide-grid">
+                    <div class="guide-col">
+                        <h3>When to use Windows</h3>
+                        <ul>
+                            <li><strong>Power User:</strong> You live in Excel 8 hours a day. Windows Excel is the "True" version.</li>
+                            <li><strong>Shortcuts:</strong> The <code>Alt</code> key Ribbon shortcuts do not exist on Mac.</li>
+                            <li><strong>Power Pivot:</strong> You need the Data Model or Power Query (Mac version is limited).</li>
+                            <li><strong>Add-ins:</strong> You use specific industry plugins (Bloomberg, CapIQ) that are Windows-only.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-col">
+                        <h3>When to use Mac</h3>
+                        <ul>
+                            <li><strong>Casual Use:</strong> You do basic tables and sums.</li>
+                            <li><strong>Ecosystem:</strong> You work primarily in Keynote/Pages and just need to view data.</li>
+                            <li><strong>Display:</strong> You prefer high-resolution text rendering (Retina display).</li>
+                            <li><em>Warning:</em> Expect frustration with advanced keyboard shortcuts on Mac Excel.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Mode Indicator -->
-        <div id="instruction-text" class="helper-text">Mode: Windows | Excel &rarr; Sheets</div>
-
-        <!-- Smart Alert (Differences) -->
-        <div id="differencesContainer" class="smart-alert" style="display: none;"></div>
-
-        <!-- Results List -->
-        <div id="loading" class="loading">Connecting to database...</div>
-        <div id="resultsContainer" class="results-list"></div>
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Simple Tab Switcher
+        function openTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            // Show selected
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight button
+            // Find the button that calls this function... simplified for this snippet:
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
