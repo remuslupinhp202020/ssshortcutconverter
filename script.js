@@ -1,176 +1,148 @@
-// REPLACE WITH YOUR NEW DEPLOYMENT URL
-const API_URL = "YOUR_NEW_GOOGLE_SCRIPT_URL_HERE";
+// PASTE YOUR GOOGLE SCRIPT URL HERE
+const API_URL = "https://script.google.com/macros/s/AKfycbyCVYvwe5Zz2aSIWZt-zaAu75_1RYHa-5Abb3HB02x0nj_jY3fnK10RfIJsaAdabzau5Q/execE"; 
 
-// State
 let appData = { shortcuts: [], differences: [] };
-let state = {
-    isMac: false,
-    isExcelSource: true
-};
+let state = { isMac: false, isExcelSource: true };
 
-// DOM Elements
-const searchInput = document.getElementById('searchInput');
-const resultsContainer = document.getElementById('resultsContainer');
-const diffContainer = document.getElementById('differencesContainer');
-const loading = document.getElementById('loading');
-const osToggle = document.getElementById('osToggle');
-const dirToggle = document.getElementById('dirToggle');
-const instructionText = document.getElementById('instruction-text');
+// Elements
+const els = {
+    search: document.getElementById('searchInput'),
+    results: document.getElementById('resultsContainer'),
+    diffBox: document.getElementById('differencesContainer'),
+    loading: document.getElementById('loading'),
+    osToggle: document.getElementById('osToggle'),
+    dirToggle: document.getElementById('dirToggle'),
+    instruction: document.getElementById('instruction-text')
+};
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    detectOS();
+    // Auto-detect Mac
+    if (navigator.platform.toUpperCase().includes('MAC')) {
+        state.isMac = true;
+        els.osToggle.checked = true;
+    }
+    updateInstruction();
     fetchData();
 });
 
-// 1. Auto-Detect OS
-function detectOS() {
-    const platform = navigator.platform.toUpperCase();
-    if (platform.indexOf('MAC') >= 0 || platform.indexOf('IPHONE') >= 0) {
-        state.isMac = true;
-        osToggle.checked = true;
-    }
-    updateInstruction();
-}
-
-// 2. Fetch Data (Shortcuts + Differences)
+// Fetch & Clean Data
 async function fetchData() {
     try {
-        const response = await fetch(API_URL);
-        const json = await response.json();
+        const res = await fetch(API_URL);
+        const json = await res.json();
         
-        // The API returns { shortcuts: [], differences: [] }
-        appData.shortcuts = json.shortcuts;
-        appData.differences = json.differences;
+        // Fix for "undefined": Standardize keys to lowercase/trimmed
+        appData.shortcuts = cleanDataKeys(json.shortcuts);
+        appData.differences = cleanDataKeys(json.differences);
         
-        loading.style.display = 'none';
-        renderShortcuts(appData.shortcuts); // Render all initially
-        renderDifferences([]); // Empty initially
-    } catch (error) {
-        console.error(error);
-        loading.textContent = "Error loading database.";
+        els.loading.style.display = 'none';
+        render(appData.shortcuts); 
+    } catch (err) {
+        console.error(err);
+        els.loading.textContent = "Error: Check Console (F12) or API URL";
     }
 }
 
-// 3. Event Listeners
-searchInput.addEventListener('input', (e) => {
-    const query = e.target.value;
-    filterShortcuts(query);
-    filterDifferences(query);
+// Helper to fix "undefined" keys
+function cleanDataKeys(data) {
+    return data.map(item => {
+        const newItem = {};
+        Object.keys(item).forEach(key => {
+            // Convert "Excel_Win " -> "excel_win"
+            newItem[key.trim().toLowerCase()] = item[key]; 
+        });
+        return newItem;
+    });
+}
+
+// Events
+els.search.addEventListener('input', (e) => {
+    const q = e.target.value;
+    filterShortcuts(q);
+    showDifferences(q);
 });
 
-osToggle.addEventListener('change', () => {
-    state.isMac = osToggle.checked;
+els.osToggle.addEventListener('change', () => {
+    state.isMac = els.osToggle.checked;
     updateInstruction();
-    // Re-render current view
-    filterShortcuts(searchInput.value);
+    filterShortcuts(els.search.value);
 });
 
-dirToggle.addEventListener('change', () => {
-    state.isExcelSource = !dirToggle.checked; // Unchecked = Excel (Left side), Checked = Sheets
+els.dirToggle.addEventListener('change', () => {
+    state.isExcelSource = !els.dirToggle.checked;
     updateInstruction();
-    filterShortcuts(searchInput.value);
+    filterShortcuts(els.search.value);
 });
 
-// 4. Update UI Helpers
 function updateInstruction() {
     const os = state.isMac ? "Mac" : "Windows";
-    const mode = state.isExcelSource ? "Excel -> Sheets" : "Sheets -> Excel";
-    
-    // Update simple text helper
-    const modifier = state.isMac ? "Cmd" : "Ctrl";
-    instructionText.innerHTML = `Mode: <strong>${os}</strong> | ${mode} | Tip: Use <strong>${modifier}</strong> key`;
+    const flow = state.isExcelSource ? "Excel &rarr; Sheets" : "Sheets &rarr; Excel";
+    els.instruction.innerHTML = `Mode: <strong>${os}</strong> | ${flow}`;
 }
 
-// 5. Filter & Render Shortcuts
+// Filtering
 function filterShortcuts(query) {
-    const lowerQ = query.toLowerCase();
-    
-    const filtered = appData.shortcuts.filter(item => {
-        // Search in description, and ALL shortcut columns to be safe
-        return Object.values(item).some(val => 
-            String(val).toLowerCase().includes(lowerQ)
-        );
-    });
-    
-    renderShortcuts(filtered);
+    const q = query.toLowerCase();
+    const filtered = appData.shortcuts.filter(item => 
+        Object.values(item).some(val => String(val).toLowerCase().includes(q))
+    );
+    render(filtered);
 }
 
-function renderShortcuts(data) {
-    resultsContainer.innerHTML = '';
+// Rendering
+function render(data) {
+    els.results.innerHTML = '';
     
-    if(data.length === 0) {
-        resultsContainer.innerHTML = '<div style="text-align:center; padding:20px; color:#666">No shortcuts found. Check the Differences panel?</div>';
+    if (data.length === 0) {
+        els.results.innerHTML = '<div style="text-align:center; color:#999">No shortcuts found.</div>';
         return;
     }
 
     data.forEach(item => {
-        // DYNAMIC COLUMN SELECTION
-        // 1. Determine OS Suffix
+        // Construct keys dynamically based on state
         const osSuffix = state.isMac ? "_mac" : "_win";
-        
-        // 2. Determine Source/Target Columns
-        let sourceCol, targetCol;
-        
-        if (state.isExcelSource) {
-            sourceCol = "excel" + osSuffix;
-            targetCol = "gsheet" + osSuffix;
-        } else {
-            sourceCol = "gsheet" + osSuffix;
-            targetCol = "excel" + osSuffix;
-        }
+        const sourceCol = (state.isExcelSource ? "excel" : "gsheet") + osSuffix;
+        const targetCol = (state.isExcelSource ? "gsheet" : "excel") + osSuffix;
 
-        const sourceKey = item[sourceCol] || "N/A";
-        const targetKey = item[targetCol] || "N/A";
+        // Fallback if key is missing
+        const sVal = item[sourceCol] || "N/A";
+        const tVal = item[targetCol] || "N/A";
 
-        // Create Card
         const card = document.createElement('div');
         card.className = 'shortcut-card';
         card.innerHTML = `
-            <div class="sc-desc">${item.description}</div>
-            <div class="sc-keys">
-                <span class="key-display source" title="Source">${sourceKey}</span>
-                <span class="sc-arrow">&rarr;</span>
-                <span class="key-display target" title="Converted">${targetKey}</span>
+            <div class="card-content">
+                <div class="desc">${item.description || "Unknown Action"}</div>
+                <div class="keys-row">
+                    <span class="key-badge">${sVal}</span>
+                    <span class="arrow">&rarr;</span>
+                    <span class="key-badge target-badge">${tVal}</span>
+                </div>
             </div>
-            <div style="font-size:0.75rem; color:#888; text-align:right;">${item.type}</div>
+            <div class="type-tag">${item.type || ""}</div>
         `;
-        resultsContainer.appendChild(card);
+        els.results.appendChild(card);
     });
 }
 
-// 6. Filter & Render Differences (Knowledge Base)
-function filterDifferences(query) {
-    if(!query) {
-        renderDifferences([]); // Hide if no search
+// "Did You Know" Smart Alert Logic
+function showDifferences(query) {
+    if (!query) {
+        els.diffBox.style.display = 'none';
         return;
     }
-
-    const lowerQ = query.toLowerCase();
     
-    const filtered = appData.differences.filter(diff => {
-        return (diff.keywords && diff.keywords.toLowerCase().includes(lowerQ)) || 
-               (diff.title && diff.title.toLowerCase().includes(lowerQ));
-    });
+    const q = query.toLowerCase();
+    const match = appData.differences.find(d => 
+        (d.keywords && d.keywords.toLowerCase().includes(q)) || 
+        (d.title && d.title.toLowerCase().includes(q))
+    );
 
-    renderDifferences(filtered);
-}
-
-function renderDifferences(data) {
-    diffContainer.innerHTML = '';
-
-    if (data.length === 0) {
-        diffContainer.innerHTML = '<div class="empty-state-panel">Search a topic (e.g. "Macro", "Save") to see platform differences.</div>';
-        return;
+    if (match) {
+        els.diffBox.style.display = 'block';
+        els.diffBox.innerHTML = `<strong>💡 ${match.title}</strong> ${match.content}`;
+    } else {
+        els.diffBox.style.display = 'none';
     }
-
-    data.forEach(diff => {
-        const div = document.createElement('div');
-        div.className = 'diff-card';
-        div.innerHTML = `
-            <h4>${diff.title}</h4>
-            <p>${diff.content}</p>
-        `;
-        diffContainer.appendChild(div);
-    });
 }
