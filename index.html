@@ -19,6 +19,7 @@
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="openTab('converter', event)">Converter Tool</button>
             <button class="tab-btn" onclick="openTab('guide', event)">Platform Guide</button>
+           <button class="tab-btn" onclick="openTab('quiz', event)">Mastery Quiz</button>
         </div>
 
         <!-- TAB 1: CONVERTER TOOL -->
@@ -170,7 +171,11 @@
                     </div>
                 </div>
             </div>
-
+            <!-- TAB 3: GENERAL QUIZ (IFRAME MODULE) -->
+            <div id="quiz" class="tab-content">
+                <!-- This loads the separate file -->
+                <iframe src="quiz/index.html" class="module-frame"></iframe>
+            </div>
         </div>
 
     <script src="script.js"></script>
