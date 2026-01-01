@@ -3,47 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shortcut Converter</title>
+    <title>Master Shortcut Converter</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for modern look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
+    <div class="app-container">
+        
+        <!-- Header & Controls -->
         <header>
-            <h1>Shortcut Converter</h1>
-            <p class="subtitle">Seamlessly switch between Excel and Google Sheets</p>
+            <div class="header-content">
+                <div>
+                    <h1>Shortcut Master</h1>
+                    <p>Excel &harr; Google Sheets Converter</p>
+                </div>
+                
+                <div class="controls">
+                    <!-- OS Toggle -->
+                    <div class="toggle-group">
+                        <span class="toggle-label">Windows</span>
+                        <label class="switch os-switch">
+                            <input type="checkbox" id="osToggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label">Mac</span>
+                    </div>
+
+                    <!-- Direction Toggle -->
+                    <div class="toggle-group">
+                        <span class="toggle-label">Excel Input</span>
+                        <label class="switch direction-switch">
+                            <input type="checkbox" id="dirToggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label">Sheets Input</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search functionality (e.g. 'Pivot', 'Macro') or keys (e.g. 'Ctrl+C')...">
+            </div>
+            
+            <!-- Quick Instruction -->
+            <div class="instruction-bar">
+                <span id="instruction-text">Hold <strong>Ctrl</strong> + <strong>C</strong></span>
+            </div>
         </header>
 
-        <!-- Direction Toggle -->
-        <div class="toggle-container">
-            <span id="label-excel">Excel</span>
-            <label class="switch">
-                <input type="checkbox" id="modeToggle">
-                <span class="slider round"></span>
-            </label>
-            <span id="label-gsheet">Google Sheets</span>
-        </div>
-        <p class="mode-text">Converting: <span id="mode-display">Excel &rarr; Google Sheets</span></p>
+        <!-- Main Dashboard -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Panel: Context & Differences -->
+            <aside class="knowledge-panel">
+                <div class="panel-header">
+                    <h3>Did you know?</h3>
+                    <button id="togglePanel" class="mobile-only">Hide</button>
+                </div>
+                <div id="differencesContainer" class="differences-list">
+                    <!-- Differences injected here -->
+                    <div class="empty-state-panel">Search a topic to see platform differences.</div>
+                </div>
+            </aside>
 
-        <!-- Search Section -->
-        <div class="search-wrapper">
-            <input type="text" id="searchInput" placeholder="Type a shortcut (e.g. Ctrl+C) or description...">
-        </div>
+            <!-- Right Panel: Shortcut Results -->
+            <section class="results-panel">
+                <div id="loading" class="loading">Initializing Database...</div>
+                <div id="resultsContainer" class="shortcuts-grid"></div>
+            </section>
 
-        <!-- Search Tips -->
-        <div class="tips-box">
-            <h3>Search Tips:</h3>
-            <ul>
-                <li><strong>Hold Keys:</strong> Use <code>+</code> (e.g., "Ctrl+Shift+V")</li>
-                <li><strong>Sequential:</strong> Use <code>,</code> or space (e.g., "Alt, H, A, C")</li>
-            </ul>
-        </div>
+        </main>
 
-        <!-- Results Output -->
-        <div id="loading" class="loading">Loading shortcuts...</div>
-        <div id="resultsContainer" class="results-grid"></div>
     </div>
 
     <script src="script.js"></script>
