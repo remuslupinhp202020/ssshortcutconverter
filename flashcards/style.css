@@ -1,0 +1,78 @@
+body { background: transparent; padding: 0; margin: 0; }
+
+.trainer-container {
+    padding: 20px;
+    background: #fff;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trainer-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.streak-box { color: #ea580c; font-size: 1.1rem; }
+
+/* Small Toggle */
+.switch-sm { position: relative; display: inline-block; width: 34px; height: 18px; margin-right: 8px; }
+.switch-sm input { opacity: 0; width: 0; height: 0; }
+.slider-sm { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #0078d7; transition: .4s; border-radius: 34px; }
+.slider-sm:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider-sm { background-color: #111827; }
+input:checked + .slider-sm:before { transform: translateX(16px); }
+
+/* Card Styling */
+.card-area { width: 100%; max-width: 500px; perspective: 1000px; margin-bottom: 30px; }
+
+.flashcard {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.card-label { font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+
+#action-text { margin: 0; color: #1e293b; font-size: 1.5rem; }
+
+.card-back { margin-top: 30px; padding-top: 30px; border-top: 1px dashed #cbd5e1; animation: fadeIn 0.3s ease; }
+
+.keys-display { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 5px; }
+
+.key-code { 
+    background: #f1f5f9; padding: 8px 12px; border-radius: 6px; 
+    font-family: monospace; font-weight: 700; font-size: 1.2rem; color: #0f172a; border: 1px solid #cbd5e1;
+}
+
+.divider { color: #94a3b8; font-style: italic; }
+
+.platform-labels { display: flex; justify-content: center; gap: 80px; font-size: 0.75rem; color: #64748b; margin-top: 5px; }
+
+/* Buttons */
+.action-btn {
+    background: #2563eb; color: white; border: none; padding: 12px 30px;
+    border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.2); transition: transform 0.1s;
+}
+.action-btn:hover { transform: translateY(-2px); }
+
+.rate-btn {
+    border: none; padding: 12px 25px; border-radius: 8px;
+    font-weight: 600; cursor: pointer; margin: 0 5px; font-size: 0.95rem;
+}
+.miss { background: #fee2e2; color: #991b1b; }
+.got { background: #dcfce7; color: #166534; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
