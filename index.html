@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shortcut Master</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -19,7 +19,7 @@
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="openTab('converter', event)">Converter Tool</button>
             <button class="tab-btn" onclick="openTab('guide', event)">Platform Guide</button>
-           <button class="tab-btn" onclick="openTab('quiz', event)">Mastery Quiz</button>
+            <button class="tab-btn" onclick="openTab('quiz', event)">Mastery Quiz</button>
         </div>
 
         <!-- TAB 1: CONVERTER TOOL -->
@@ -92,7 +92,6 @@
         </div>
 
         <!-- TAB 2: PLATFORM GUIDE -->
-       <!-- TAB 2: PLATFORM GUIDE -->
         <div id="guide" class="tab-content">
             
             <!-- SECTION 1: THE DATA ANALYST ECOSYSTEM -->
@@ -171,19 +170,28 @@
                     </div>
                 </div>
             </div>
-            <!-- TAB 3: GENERAL QUIZ (IFRAME MODULE) -->
-            <div id="quiz" class="tab-content">
-                <!-- This loads the separate file -->
-                <iframe src="quiz/index.html" class="module-frame"></iframe>
-            </div>
+
         </div>
 
+        <!-- TAB 3: GENERAL QUIZ (IFRAME MODULE) -->
+        <div id="quiz" class="tab-content">
+            <!-- This loads the separate file from the /quiz/ folder -->
+            <iframe src="quiz/index.html" class="module-frame"></iframe>
+        </div>
+
+    </div>
+
+    <!-- MAIN APP SCRIPT -->
     <script src="script.js"></script>
+    
+    <!-- TAB SWITCHER LOGIC -->
     <script>
-        // Simple Tab Logic inside HTML for zero-dependency
         function openTab(tabId, event) {
+            // Remove active class from all contents and buttons
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            // Add active class to target tab and clicked button
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
