@@ -1,5 +1,5 @@
 // REPLACE WITH YOUR APPS SCRIPT URL
-const API_URL = "https://script.google.com/macros/s/AKfycbwEjkaQQRSTdhncI9Ix43bTKdN0K3NlTemD3S3B9FtqOLtjQfNueuO3Zl-nd-la8oVJoQ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyCVYvwe5Zz2aSIWZt-zaAu75_1RYHa-5Abb3HB02x0nj_jY3fnK10RfIJsaAdabzau5Q/exec";
 
 let allShortcuts = [];
 let currentCard = null;
