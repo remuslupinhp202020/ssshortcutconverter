@@ -1,4 +1,49 @@
-<!-- NEW LEGEND SECTION -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortcut Master</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Shortcut Master</h1>
+            <p class="subtitle">Excel &harr; Google Sheets Reference</p>
+        </header>
+
+        <!-- Controls (Stack on mobile) -->
+        <div class="controls-wrapper">
+            <!-- OS Switch -->
+            <div class="toggle-pill">
+                <span class="label">Win</span>
+                <label class="switch">
+                    <input type="checkbox" id="osToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="label">Mac</span>
+            </div>
+
+            <!-- Direction Switch -->
+            <div class="toggle-pill">
+                <span class="label">Excel</span>
+                <label class="switch direction-switch">
+                    <input type="checkbox" id="dirToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="label">Sheets</span>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search 'Pivot', 'Macro', or keys...">
+        </div>
+
+        <!-- Legend / Tips (Responsive Card) -->
         <div class="tips-card">
             <!-- Left Side: Hold -->
             <div class="tip-column">
@@ -24,3 +69,18 @@
                 </p>
             </div>
         </div>
+
+        <!-- Mode Indicator -->
+        <div id="instruction-text" class="helper-text">Mode: Windows | Excel &rarr; Sheets</div>
+
+        <!-- Smart Alert (Differences) -->
+        <div id="differencesContainer" class="smart-alert" style="display: none;"></div>
+
+        <!-- Results List -->
+        <div id="loading" class="loading">Connecting to database...</div>
+        <div id="resultsContainer" class="results-list"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
