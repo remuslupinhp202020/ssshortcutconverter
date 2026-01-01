@@ -1,5 +1,5 @@
 // PASTE YOUR GOOGLE SCRIPT URL HERE
-const API_URL = "https://script.google.com/macros/s/AKfycbyCVYvwe5Zz2aSIWZt-zaAu75_1RYHa-5Abb3HB02x0nj_jY3fnK10RfIJsaAdabzau5Q/execE"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbyCVYvwe5Zz2aSIWZt-zaAu75_1RYHa-5Abb3HB02x0nj_jY3fnK10RfIJsaAdabzau5Q/exec"; 
 
 let appData = { shortcuts: [], differences: [] };
 let state = { isMac: false, isExcelSource: true };
