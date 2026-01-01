@@ -17,7 +17,6 @@ const els = {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    // Auto-detect Mac
     if (navigator.platform.toUpperCase().includes('MAC')) {
         state.isMac = true;
         els.osToggle.checked = true;
@@ -26,30 +25,25 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchData();
 });
 
-// Fetch & Clean Data
+// Fetch
 async function fetchData() {
     try {
         const res = await fetch(API_URL);
         const json = await res.json();
-        
-        // Fix for "undefined": Standardize keys to lowercase/trimmed
         appData.shortcuts = cleanDataKeys(json.shortcuts);
         appData.differences = cleanDataKeys(json.differences);
-        
         els.loading.style.display = 'none';
         render(appData.shortcuts); 
     } catch (err) {
         console.error(err);
-        els.loading.textContent = "Error: Check Console (F12) or API URL";
+        els.loading.textContent = "Error: Check Console.";
     }
 }
 
-// Helper to fix "undefined" keys
 function cleanDataKeys(data) {
     return data.map(item => {
         const newItem = {};
         Object.keys(item).forEach(key => {
-            // Convert "Excel_Win " -> "excel_win"
             newItem[key.trim().toLowerCase()] = item[key]; 
         });
         return newItem;
@@ -81,7 +75,7 @@ function updateInstruction() {
     els.instruction.innerHTML = `Mode: <strong>${os}</strong> | ${flow}`;
 }
 
-// Filtering
+// Filter
 function filterShortcuts(query) {
     const q = query.toLowerCase();
     const filtered = appData.shortcuts.filter(item => 
@@ -90,7 +84,7 @@ function filterShortcuts(query) {
     render(filtered);
 }
 
-// Rendering
+// Render
 function render(data) {
     els.results.innerHTML = '';
     
@@ -100,14 +94,18 @@ function render(data) {
     }
 
     data.forEach(item => {
-        // Construct keys dynamically based on state
         const osSuffix = state.isMac ? "_mac" : "_win";
         const sourceCol = (state.isExcelSource ? "excel" : "gsheet") + osSuffix;
         const targetCol = (state.isExcelSource ? "gsheet" : "excel") + osSuffix;
 
-        // Fallback if key is missing
         const sVal = item[sourceCol] || "N/A";
         const tVal = item[targetCol] || "N/A";
+        
+        // --- NEW LOGIC FOR TAG COLORS ---
+        const typeStr = (item.type || "").toLowerCase();
+        let typeClass = "type-tag"; // default
+        if (typeStr.includes("hold")) typeClass += " tag-hold";
+        else if (typeStr.includes("seq")) typeClass += " tag-seq";
 
         const card = document.createElement('div');
         card.className = 'shortcut-card';
@@ -120,19 +118,17 @@ function render(data) {
                     <span class="key-badge target-badge">${tVal}</span>
                 </div>
             </div>
-            <div class="type-tag">${item.type || ""}</div>
+            <div class="${typeClass}">${item.type || ""}</div>
         `;
         els.results.appendChild(card);
     });
 }
 
-// "Did You Know" Smart Alert Logic
 function showDifferences(query) {
     if (!query) {
         els.diffBox.style.display = 'none';
         return;
     }
-    
     const q = query.toLowerCase();
     const match = appData.differences.find(d => 
         (d.keywords && d.keywords.toLowerCase().includes(q)) || 
