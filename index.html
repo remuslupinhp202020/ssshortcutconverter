@@ -3,79 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Shortcut Converter</title>
+    <title>Shortcut Master</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <!-- Header & Controls -->
+    <div class="container">
         <header>
-            <div class="header-content">
-                <div>
-                    <h1>Shortcut Master</h1>
-                    <p>Excel &harr; Google Sheets Converter</p>
-                </div>
-                
-                <div class="controls">
-                    <!-- OS Toggle -->
-                    <div class="toggle-group">
-                        <span class="toggle-label">Windows</span>
-                        <label class="switch os-switch">
-                            <input type="checkbox" id="osToggle">
-                            <span class="slider round"></span>
-                        </label>
-                        <span class="toggle-label">Mac</span>
-                    </div>
-
-                    <!-- Direction Toggle -->
-                    <div class="toggle-group">
-                        <span class="toggle-label">Excel Input</span>
-                        <label class="switch direction-switch">
-                            <input type="checkbox" id="dirToggle">
-                            <span class="slider round"></span>
-                        </label>
-                        <span class="toggle-label">Sheets Input</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search Bar -->
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search functionality (e.g. 'Pivot', 'Macro') or keys (e.g. 'Ctrl+C')...">
-            </div>
-            
-            <!-- Quick Instruction -->
-            <div class="instruction-bar">
-                <span id="instruction-text">Hold <strong>Ctrl</strong> + <strong>C</strong></span>
-            </div>
+            <h1>Shortcut Master</h1>
+            <p class="subtitle">The ultimate Excel &harr; Google Sheets Reference</p>
         </header>
 
-        <!-- Main Dashboard -->
-        <main class="dashboard-grid">
-            
-            <!-- Left Panel: Context & Differences -->
-            <aside class="knowledge-panel">
-                <div class="panel-header">
-                    <h3>Did you know?</h3>
-                    <button id="togglePanel" class="mobile-only">Hide</button>
-                </div>
-                <div id="differencesContainer" class="differences-list">
-                    <!-- Differences injected here -->
-                    <div class="empty-state-panel">Search a topic to see platform differences.</div>
-                </div>
-            </aside>
+        <!-- Centered Controls -->
+        <div class="controls-wrapper">
+            <!-- OS Switch -->
+            <div class="toggle-pill">
+                <span class="label">Win</span>
+                <label class="switch">
+                    <input type="checkbox" id="osToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span class="label">Mac</span>
+            </div>
 
-            <!-- Right Panel: Shortcut Results -->
-            <section class="results-panel">
-                <div id="loading" class="loading">Initializing Database...</div>
-                <div id="resultsContainer" class="shortcuts-grid"></div>
-            </section>
+            <!-- Direction Switch -->
+            <div class="toggle-pill">
+                <span class="label">Excel</span>
+                <label class="switch direction-switch">
+                    <input type="checkbox" id="dirToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span class="label">Sheets</span>
+            </div>
+        </div>
 
-        </main>
+        <!-- Search Bar -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search 'Pivot', 'Macro', or 'Ctrl+C'...">
+        </div>
+        
+        <!-- Instructional Text -->
+        <div id="instruction-text" class="helper-text">Mode: Windows | Excel &rarr; Sheets</div>
 
+        <!-- "Did You Know" Smart Alert (Hidden by default) -->
+        <div id="differencesContainer" class="smart-alert" style="display: none;"></div>
+
+        <!-- Results List -->
+        <div id="loading" class="loading">Connecting to database...</div>
+        <div id="resultsContainer" class="results-list"></div>
     </div>
 
     <script src="script.js"></script>
